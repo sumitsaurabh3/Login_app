@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'Secret_Screen.dart';
 
 class Login extends StatefulWidget {
-
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -57,6 +54,7 @@ class _LoginState extends State<Login> {
                   child: Text('Login'),
 
                   onPressed: () async{
+                    WidgetsFlutterBinding.ensureInitialized();
                     final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
                  sharedPreferences.setString('email', emailController.text);
                  Get.to(Secret_Screen());

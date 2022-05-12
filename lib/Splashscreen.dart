@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:login_app/Login.dart';
@@ -15,14 +14,18 @@ class Splashscreen extends StatefulWidget {
 class _SplashscreenState extends State<Splashscreen> {
   @override
   void initState(){
-    Timer(Duration(seconds: 2),()=>Get.to(finalEmail==null ? Login() : Secret_Screen()));
+    getValidationData().whenComplete(()async{
+      Timer(Duration(seconds: 2),()=>Get.to(finalEmail==null ? Login() : Secret_Screen()));
+    });
     super.initState();
   }
+
   Future getValidationData()async{
+    WidgetsFlutterBinding.ensureInitialized();
     final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
     var obtainedEmail=sharedPreferences.getString('email');
     setState((){
-     // finalEmail=obtainedEmail;
+      finalEmail=obtainedEmail!;
 
     });
     print(finalEmail);
@@ -40,7 +43,10 @@ class _SplashscreenState extends State<Splashscreen> {
               radius: 50.0,
 
             ),
-            Padding(padding: const EdgeInsets.only(top: 8.0)),
+            Padding(padding: const EdgeInsets.only(top: 8.0),
+            child: CircularProgressIndicator(
+              color: Colors.white,
+            ),),
           ],
         ),
       ),
