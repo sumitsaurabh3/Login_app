@@ -15,12 +15,15 @@ class HomeView extends StatelessWidget {
       ),
       body:
       Center(
+
         child: Column(
+
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
 
             Text("This is Secret Screen",style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold),),
+            Padding(padding: EdgeInsets.only(top: 30)),
             ElevatedButton(
                 onPressed: () async {
                   await _prefService.removeCache("password").whenComplete(() {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_app/routes.dart';
 import 'package:login_app/shared_service_preferences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import
 class LoginView extends StatelessWidget {
   final PrefService _prefService = PrefService();
   final email = TextEditingController();
@@ -14,16 +14,24 @@ class LoginView extends StatelessWidget {
         title: Text("Login"),
       ),
       body: Center(
-        child: Container(
+
+        child:
+        Container(
           width: 400.0,
           child: Column(
+
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+
             children: [
+
+              Text('User Detail',style: TextStyle(fontSize: 50,fontWeight: FontWeight.bold,color: Colors.grey),),
+                Padding(padding: EdgeInsets.only(top: 30,bottom: 0)),
               TextField(
+
                 controller: email,
                 decoration: InputDecoration(
-                    border: new OutlineInputBorder(), hintText: "Enter email"),
+                    border: new OutlineInputBorder(), hintText: "Enter email",),
               ),
               SizedBox(
                 height: 20.0,
