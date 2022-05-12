@@ -1,68 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:login_app/routes.dart';
+import 'package:login_app/shared_service_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'Secret_Screen.dart';
-
-class Login extends StatefulWidget {
-  @override
-  _LoginState createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> {
-  final TextEditingController emailController=TextEditingController();
-  final TextEditingController passwordController=TextEditingController();
+class LoginView extends StatelessWidget {
+  final PrefService _prefService = PrefService();
+  final email = TextEditingController();
+  final password = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text('Login Page'),
+        centerTitle: true,
+        title: Text("Login"),
       ),
-      body:
-      Container(
-        child: Center(
+      body: Center(
+        child: Container(
+          width: 400.0,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Padding(padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                  hintText: "Enter E-mail",
-                  contentPadding: EdgeInsets.all(10.0),
-                  hintStyle: TextStyle(
-                    color: Colors.blueGrey,fontWeight: FontWeight.bold,
-
-                  )
-                ),
-              ),),
-              Padding(padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  controller: passwordController,
-                  decoration: const InputDecoration(
-                      hintText: "Enter Password",
-                      contentPadding: EdgeInsets.all(10.0),
-                      hintStyle: TextStyle(
-                        color: Colors.blueGrey,fontWeight: FontWeight.bold,
-
-                      )
-                  ),
-                ),),
-              MaterialButton(
-                  color: Colors.red,
-                  child: Text('Login'),
-
-                  onPressed: () async{
-
-                    final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-                 sharedPreferences.setString('email', emailController.text);
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Secret_Screen()));
-                  })
-
+              TextField(
+                controller: email,
+                decoration: InputDecoration(
+                    border: new OutlineInputBorder(), hintText: "Enter email"),
+              ),
+              SizedBox(
+                height: 20.0,
+              ),
+              TextField(
+                controller: password,
+                decoration: InputDecoration(
+                    border: new OutlineInputBorder(),
+                    hintText: "Enter password"),
+              ),
+              SizedBox(
+                height: 40.0,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    _prefService.createCache(password.text).whenComplete(() {
+                      if (email.text.isNotEmpty && password.text.isNotEmpty) {
+                        Navigator.of(context).pushNamed(HomeRoute);
+                      }
+                    });
+                  },
+                  child: Text("Login"))
             ],
           ),
-
         ),
       ),
     );

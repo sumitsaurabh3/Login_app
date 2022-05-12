@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
-import 'Login.dart';
+import 'package:login_app/routes.dart';
 
+import 'Login.dart';
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:Login(),
+      initialRoute: SplashRoute,
+      routes: routes,
+      home: LoginView(),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
     );
   }
 }
-

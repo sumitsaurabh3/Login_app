@@ -1,55 +1,38 @@
 import 'dart:async';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:login_app/Login.dart';
+import 'package:login_app/shared_service_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'Secret_Screen.dart';
-String finalEmail='';
-class Splashscreen extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:login_app/routes.dart';
+class SplashView extends StatefulWidget {
   @override
-  _SplashscreenState createState() => _SplashscreenState();
+  SplashViewState createState() => SplashViewState();
 }
 
-class _SplashscreenState extends State<Splashscreen> {
+class SplashViewState extends State<SplashView> {
+  final PrefService _prefService = PrefService();
+
   @override
-  void initState(){
-    getValidationData().whenComplete(()async{
-      Timer(Duration(seconds: 2),()=>Get.to(finalEmail==null ? Login() : Secret_Screen()));
+  void initState() {
+    _prefService.readCache("password").then((value) {
+      print(value.toString());
+      if (value != null) {
+        return Timer(Duration(seconds: 2),
+                () => Navigator.of(context).pushNamed(HomeRoute));
+      } else {
+        return Timer(Duration(seconds: 2),
+                () => Navigator.of(context).pushNamed(LoginRoute));
+      }
     });
     super.initState();
   }
 
-  Future getValidationData()async{
-    WidgetsFlutterBinding.ensureInitialized();
-    final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
-    var obtainedEmail=sharedPreferences.getString('email');
-    setState((){
-      finalEmail=obtainedEmail!;
-
-    });
-    print(finalEmail);
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CircleAvatar(
-              child: Icon(Icons.local_activity),
-              radius: 50.0,
-
-            ),
-            Padding(padding: const EdgeInsets.only(top: 8.0),
-            child: CircularProgressIndicator(
-              color: Colors.white,
-            ),),
-          ],
-        ),
-      ),
+          child: Icon(
+            Icons.app_blocking,
+          )),
     );
   }
 }
