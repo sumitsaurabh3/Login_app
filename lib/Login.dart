@@ -54,10 +54,10 @@ class _LoginState extends State<Login> {
                   child: Text('Login'),
 
                   onPressed: () async{
-                    WidgetsFlutterBinding.ensureInitialized();
+
                     final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
                  sharedPreferences.setString('email', emailController.text);
-                 Get.to(Secret_Screen());
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>Secret_Screen()));
                   })
 
             ],

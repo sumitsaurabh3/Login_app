@@ -27,10 +27,9 @@ class _Secret_ScreenState extends State<Secret_Screen> {
                 color: Colors.redAccent,
                 child: Text('Logout'),
                 onPressed: ()async {
-                  WidgetsFlutterBinding.ensureInitialized();
                   final SharedPreferences sharedPreferences=await SharedPreferences.getInstance();
                   sharedPreferences.remove(finalEmail);
-                  Get.to(Login());
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                 })
 
           ],
